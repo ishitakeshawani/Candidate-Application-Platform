@@ -5,7 +5,7 @@ import {
   Typography,
   Grid,
   Link,
-  Button,
+  Button,Box
 } from "@mui/material";
 
 const typographyStyles = {
@@ -33,9 +33,11 @@ export default function JobCard({ job }) {
       sx={{
         borderRadius: "1.5rem",
         boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
-        padding: "5px",
+        padding: "3px",
         width: "100%",
-        // height: '100%'
+        "&:hover": {
+          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.25)",
+          },
       }}
     >
       <CardContent
@@ -87,17 +89,17 @@ export default function JobCard({ job }) {
           </Grid>
         </Grid>
         {/* salary */}
-        {job.salaryCurrencyCode && job.minJdSalary && job.maxJdSalary && (
+        {(job.salaryCurrencyCode && job.minJdSalary && job.maxJdSalary) ? (
           <Typography variant="p">
             Estimated Salary: {job.salaryCurrencyCode}
             {job.minJdSalary} - {job.maxJdSalary}
           </Typography>
-        )}
+        ) : <Box sx={{height: '20px'}}></Box>}
         {/* About Role */}
         <Typography
           variant="body1"
           component="div"
-          style={{ whiteSpace: "pre-wrap" }}
+          style={{ whiteSpace: "pre-wrap", maxHeight: '30%' }}
         >
           <p>Job description:</p>
           {expanded ? (
@@ -107,21 +109,29 @@ export default function JobCard({ job }) {
           )}
           <Grid container justifyContent="center">
             <Button onClick={toggleExpand} color="primary">
-              {expanded ? "Read less" : "Read more"}
+              {expanded ? "Read less" : "View Job"}
             </Button>
           </Grid>
         </Typography>
         {/* Minimum experience */}
-
-        <Typography variant="h3" component="h3" sx={typographyStyles.h3}>
-          Minimum Experience
-        </Typography>
-        <Typography variant="p">{job.minExp} years</Typography>
+            {
+                job.minExp ? <Box sx={{height: '2.5rem'}}><Typography  variant="h3" component="h3" sx={typographyStyles.h3}>
+                Minimum Experience
+              </Typography>
+              <Typography variant="p">{job.minExp} years</Typography></Box> :  <Box sx={{height: '2.5rem'}}></Box>
+            }
         <Button
           variant="contained"
           sx={{
             background: "rgb(85, 239, 196)",
             color: "black",
+            padding:'8px 18px',
+            fontWeight: '500',
+            marginTop: '1rem',
+            boxShadow: 'none',
+            "&:hover": {
+                background: "rgb(85, 239, 196)",boxShadow: 'none',
+              },
           }}
         >
           Easy Apply
