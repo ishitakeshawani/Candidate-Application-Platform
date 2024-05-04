@@ -7,14 +7,18 @@ const initialState = {
     jobs: [],
     isLoading: false,
     error: null,
+    numberOfJobs: 0
 }
+
+const axiosInstance = axios.create({
+    baseURL: "https://api.weekday.technology/", 
+  });
 
 // Created getJobs async thunk using axios for POST request
 export const getJobs = createAsyncThunk("adhoc/getSampleJdJSON",
     async (payload) => {
         try {
-            const data = await axios.post("adhoc/getSampleJdJSON",payload);
-            console.log(data);
+            const { data } = await axiosInstance.post("adhoc/getSampleJdJSON",payload);
             return data;
         } catch (error) {
             console.log(error);
@@ -25,7 +29,7 @@ export const getJobs = createAsyncThunk("adhoc/getSampleJdJSON",
 
 // Created job slice using createSlice to manage state of jobs
 export const jobSlice = createSlice({
-    name:"Jobs",
+    name:"jobs",
     initialState,
     reducers:{},
     extraReducers:(builder) => {
@@ -33,15 +37,18 @@ export const jobSlice = createSlice({
           .addCase(getJobs.pending, (state) => {
             state.isLoading = true;
             state.error = null;
+            state.numberOfJobs = 0;
           })
           .addCase(getJobs.fulfilled, (state, action) => {
             state.isLoading = false;
             state.error = null;
-            state.jobs = action.payload;
+            state.jobs = action.payload.jdList;
+            state.numberOfJobs = action.payload.totalCount;
           })
           .addCase(getJobs.rejected, (state, action) => {
             state.isLoading = false;
             state.error = action.error.message;
+            state.numberOfJobs = 0;
           });
     }
 })
