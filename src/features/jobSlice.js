@@ -10,6 +10,7 @@ const initialState = {
     numberOfJobs: 0
 }
 
+// Defined baseURl of API
 const axiosInstance = axios.create({
     baseURL: "https://api.weekday.technology/", 
   });
