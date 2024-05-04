@@ -2,6 +2,7 @@ import React,{useEffect} from 'react'
 import { getJobs, useJobs } from '../features/jobSlice'
 import { useDispatch } from "react-redux";
 import { Grid, CircularProgress } from '@mui/material';
+import JobCard from '../components/JobCard';
 
 export default function JobList() {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function JobList() {
       jobs?.length > 0 ? (
         jobs?.map((job, index) => 
         <Grid item key={job.jdUid} xs={12} sm={6} md={4} lg={3}>
-            <h1>{job.companyName}</h1>
+            <JobCard job={job}/>
             </Grid>)
       ) : (
         "Can not find jobs!"
