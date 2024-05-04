@@ -19,11 +19,14 @@ export default function JobList() {
     
   return (
     <Grid container spacing={2}>
+    {/* show Loader if isLoading */}
       {isLoading ? (
         <Grid container justifyContent="center" style={{ minHeight: '100vh' }}>
           <CircularProgress />
         </Grid>
-      ) : jobs?.length > 0 ? (
+      ) : 
+    // Show jobs if available
+      jobs?.length > 0 ? (
         jobs?.map((job, index) => 
         <Grid item key={job.jdUid} xs={12} sm={6} md={4} lg={3}>
             <h1>{job.companyName}</h1>
