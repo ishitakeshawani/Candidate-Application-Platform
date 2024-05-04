@@ -1,0 +1,1 @@
+<h1>candidate-application-platform</h1>
