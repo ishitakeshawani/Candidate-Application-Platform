@@ -1,24 +1,50 @@
-import React,{useEffect} from 'react'
-import { getJobs, useJobs } from '../features/jobSlice'
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { getJobs, useJobs } from '../features/jobSlice';
+import { useDispatch } from 'react-redux';
 import { Grid, CircularProgress } from '@mui/material';
 import JobCard from '../components/JobCard';
 
 export default function JobList() {
+    const [offset, setOffset] = useState(0);
     const dispatch = useDispatch();
-    // fetch jobs from API using getJobs
+
+    // Fetch jobs from API using getJobs
     useEffect(() => {
-      dispatch(getJobs());
-    }, [dispatch]);
-    const payload = {
-        "limit":20,
-        "offset":21
-    }
-    // get jobs, isLoading, numberOfJobs by Destructuring using useJobs hook
-    const { jobs, isLoading, numberOfJobs } = useJobs(payload);
+        const payload = {
+            "limit": 10,
+            "offset": offset * 10
+        };
+        dispatch(getJobs(payload));
+    }, [dispatch, offset]); // Include offset in dependencies
+
+    // Get jobs, isLoading, numberOfJobs by destructuring using useJobs hook
+    const { jobs, isLoading, numberOfJobs, allJobs } = useJobs();
     console.log(jobs, isLoading, numberOfJobs);
-    
-  return (
+
+
+    const fetchMoreJobs = () => {
+        setOffset(prevOffset => prevOffset + 1);
+    };
+
+    useEffect(() => {
+        // handle scroll event
+        const handleScroll = () => {
+            if (window.innerHeight + window.scrollY >= document.documentElement.offsetHeight) {
+                // User reached to the bottom of the page
+                fetchMoreJobs();
+            }
+        };
+
+        // Add scroll event 
+        window.addEventListener("scroll", handleScroll);
+
+        // Remove scroll event 
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    return (
     <Grid container spacing={2}>
     {/* show Loader if isLoading */}
       {isLoading ? (
@@ -27,13 +53,13 @@ export default function JobList() {
         </Grid>
       ) : 
     // Show jobs if available
-      jobs?.length > 0 ? (
-        jobs?.map((job, index) => 
+      allJobs?.length > 0 ? (
+        allJobs?.map((job, index) => 
         <Grid item key={job.jdUid} xs={12} sm={6} md={4} lg={3}>
             <JobCard job={job}/>
             </Grid>)
-      ) : (
-        "Can not find jobs!"
+            ) : (
+        <h1 sx={{margin: 'auto'}}>Can not find jobs!</h1>
       )}
     </Grid>
   );

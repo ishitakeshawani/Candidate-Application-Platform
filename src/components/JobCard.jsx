@@ -32,7 +32,7 @@ export default function JobCard({ job }) {
     <Card
       sx={{
         borderRadius: "1.5rem",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.15)",
+        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.13)",
         padding: "3px",
         width: "100%",
         "&:hover": {
@@ -109,7 +109,7 @@ export default function JobCard({ job }) {
           )}
           <Grid container justifyContent="center">
             <Button onClick={toggleExpand} color="primary">
-              {expanded ? "Read less" : "View Job"}
+              {expanded ? "Read less" : "Read more"}
             </Button>
           </Grid>
         </Typography>
@@ -133,6 +133,8 @@ export default function JobCard({ job }) {
                 background: "rgb(85, 239, 196)",boxShadow: 'none',
               },
           }}
+          href={job.jdLink}
+          target="_blank"
         >
           Easy Apply
         </Button>

@@ -7,7 +7,8 @@ const initialState = {
     jobs: [],
     isLoading: false,
     error: null,
-    numberOfJobs: 0
+    numberOfJobs: 0,
+    allJobs: [],
 }
 
 // Defined baseURl of API
@@ -45,6 +46,7 @@ export const jobSlice = createSlice({
             state.error = null;
             state.jobs = action.payload.jdList;
             state.numberOfJobs = action.payload.totalCount;
+            state.allJobs = [...state.allJobs,...action.payload.jdList]
           })
           .addCase(getJobs.rejected, (state, action) => {
             state.isLoading = false;
@@ -57,3 +59,4 @@ export const jobSlice = createSlice({
 // exporting jobReducer and useJobs
 export const jobReducer = jobSlice.reducer;
 export const useJobs = () => useSelector((state) => state.jobs);
+export const { setAllJobs } = jobSlice.actions;
