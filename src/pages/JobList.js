@@ -7,19 +7,19 @@ import JobCard from '../components/JobCard';
 export default function JobList() {
     const [offset, setOffset] = useState(0);
     const dispatch = useDispatch();
+    const LIMIT = 12;
 
     // Fetch jobs from API using getJobs
     useEffect(() => {
         const payload = {
-            "limit": 10,
-            "offset": offset * 10
+            "limit": LIMIT,
+            "offset": offset * LIMIT
         };
         dispatch(getJobs(payload));
     }, [dispatch, offset]); // Include offset in dependencies
 
     // Get jobs, isLoading, numberOfJobs by destructuring using useJobs hook
-    const { jobs, isLoading, numberOfJobs, allJobs } = useJobs();
-    console.log(jobs, isLoading, numberOfJobs);
+    const { isLoading, allJobs } = useJobs();
 
 
     const fetchMoreJobs = () => {
