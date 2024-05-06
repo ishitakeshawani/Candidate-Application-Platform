@@ -21,7 +21,6 @@ export const filterBy = (allJobs, selectedFilters, backUpJobs) => {
 
           // Check if job have same company name
           if(key === "companyName" && job[key].length > 0){
-            console.log(job[key],value);
             return job[key] && job[key].toLowerCase().includes(value.toLowerCase())
           } else if (key === "companyName" && job[key].length === 0){
             return job[key]

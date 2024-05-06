@@ -41,7 +41,6 @@ export const jobSlice = createSlice({
       },
       setSelectedFilters: (state,action) => {
         state.selectedFilters = action.payload
-        console.log(state.selectedFilters);
       }
     },
     extraReducers:(builder) => {

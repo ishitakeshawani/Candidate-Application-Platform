@@ -8,7 +8,6 @@ const SearchFilter = ({ allItems }) => {
   const { selectedFilters } = useJobs();
   const dispatch = useDispatch();
 
-  console.log(searchValue);
 
   useEffect(() => {
     if(searchValue){
@@ -16,6 +15,11 @@ const SearchFilter = ({ allItems }) => {
         let data = { ...selectedFilters };
         data[nameOfFilter] = searchValue;
         dispatch(setSelectedFilters(data)); // setting seleceted filters when selected options change
+    }else{
+        let nameOfFilter = "companyName";
+        let data = { ...selectedFilters };
+        delete data[nameOfFilter]; 
+        dispatch(setSelectedFilters(data));
     }
 }, [searchValue]);
 

@@ -17,6 +17,11 @@ export default function Filter({filter}) {
             let data = { ...selectedFilters };
             data[nameOfFilter] = selectedOptions;
             dispatch(setSelectedFilters(data)); // setting seleceted filters when selected options change
+        }else{
+            let nameOfFilter = filter.term;
+            let data = { ...selectedFilters };
+            delete data[nameOfFilter]; 
+            dispatch(setSelectedFilters(data));
         }
     }, [selectedOptions]);
 
