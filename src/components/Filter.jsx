@@ -1,16 +1,31 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import Chip from '@mui/material/Chip';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import { useJobs, setSelectedFilters } from '../features/jobSlice';
+import { useDispatch } from 'react-redux';
+
 
 export default function Filter({filter}) {
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const { selectedFilters } = useJobs();
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        if(selectedOptions.length > 0){
+            let nameOfFilter = filter.term;
+            let data = { ...selectedFilters };
+            data[nameOfFilter] = selectedOptions;
+            dispatch(setSelectedFilters(data)); // setting seleceted filters when selected options change
+        }
+    }, [selectedOptions]);
 
     // remove option
     const handleRemoveOption = (option) => {
         setSelectedOptions(prevSelected => prevSelected.filter(item => item !== option));
     };
+
+    
   return (
     <Autocomplete sx={{minWidth: '10rem'}}
     multiple
@@ -18,8 +33,8 @@ export default function Filter({filter}) {
     onChange={(event, newValue) => {
         setSelectedOptions(newValue);
     }}
-    options={filter.options.map(option => option.toString())} // Convert numbers to strings
-    getOptionLabel={(option) => option.charAt(0).toUpperCase() + option.slice(1).toLowerCase()}
+    options={filter.options}
+    // getOptionLabel={(option) => option.charAt(0).toUpperCase() + option.slice(1).toLowerCase()}
     renderTags={(value, getTagProps) =>
         value.map((option, index) => (
             <Chip
