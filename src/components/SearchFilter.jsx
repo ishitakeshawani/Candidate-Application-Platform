@@ -21,6 +21,7 @@ const SearchFilter = ({ allItems }) => {
         delete data[nameOfFilter]; 
         dispatch(setSelectedFilters(data));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [searchValue]);
 
   return (

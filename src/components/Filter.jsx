@@ -23,6 +23,7 @@ export default function Filter({filter}) {
             delete data[nameOfFilter]; 
             dispatch(setSelectedFilters(data));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOptions]);
 
     // remove option

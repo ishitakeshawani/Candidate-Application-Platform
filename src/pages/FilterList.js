@@ -5,7 +5,7 @@ import { useJobs } from '../features/jobSlice';
 import SearchFilter from "../components/SearchFilter";
 
 export default function FilterList() {
-const { allJobs, backUpJobs } = useJobs();
+const { backUpJobs } = useJobs();
 
 // Created list of filters with options
   let listOfFilters = [
