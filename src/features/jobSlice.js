@@ -9,6 +9,8 @@ const initialState = {
     error: null,
     numberOfJobs: 0,
     allJobs: [],
+    backUpJobs: [],
+    selectedFilters: {}
 }
 
 // Defined baseURl of API
@@ -33,7 +35,15 @@ export const getJobs = createAsyncThunk("adhoc/getSampleJdJSON",
 export const jobSlice = createSlice({
     name:"jobs",
     initialState,
-    reducers:{},
+    reducers:{
+      setFilteredJobs: (state,action) => {
+        state.allJobs = action.payload
+      },
+      setSelectedFilters: (state,action) => {
+        state.selectedFilters = action.payload
+        console.log(state.selectedFilters);
+      }
+    },
     extraReducers:(builder) => {
         builder
           .addCase(getJobs.pending, (state) => {
@@ -47,6 +57,7 @@ export const jobSlice = createSlice({
             state.jobs = action.payload.jdList;
             state.numberOfJobs = action.payload.totalCount;
             state.allJobs = [...state.allJobs,...action.payload.jdList]
+            state.backUpJobs = state.allJobs
           })
           .addCase(getJobs.rejected, (state, action) => {
             state.isLoading = false;
@@ -59,4 +70,4 @@ export const jobSlice = createSlice({
 // exporting jobReducer and useJobs
 export const jobReducer = jobSlice.reducer;
 export const useJobs = () => useSelector((state) => state.jobs);
-export const { setAllJobs } = jobSlice.actions;
+export const { setFilteredJobs, setSelectedFilters } = jobSlice.actions;
