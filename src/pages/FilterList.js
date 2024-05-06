@@ -54,7 +54,7 @@ const { backUpJobs } = useJobs();
         
     },
   ];
-  return <Box sx={{display:'flex',gap: '1rem'}}>
+  return <Box sx={{display:'flex',gap: '1rem',flexWrap:'wrap'}}>
     {
         listOfFilters.map((filter,index) => <Filter filter={filter} key={index}/>)
     }

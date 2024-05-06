@@ -33,14 +33,14 @@ export default function Filter({filter}) {
 
     
   return (
-    <Autocomplete sx={{minWidth: '10rem'}}
+    <Autocomplete sx={{ minWidth: '10rem', '& .MuiChip-root': { color: '#b3b3b3', textTransform: 'capitalize' } }}
     multiple
     value={selectedOptions}
     onChange={(event, newValue) => {
         setSelectedOptions(newValue);
     }}
     options={filter.options}
-    // getOptionLabel={(option) => option.charAt(0).toUpperCase() + option.slice(1).toLowerCase()}
+    getOptionLabel={(option) => option.toString().charAt(0).toUpperCase() + option.toString().slice(1).toLowerCase()}
     renderTags={(value, getTagProps) =>
         value.map((option, index) => (
             <Chip
