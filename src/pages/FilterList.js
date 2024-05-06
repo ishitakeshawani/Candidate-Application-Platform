@@ -2,6 +2,7 @@ import React from "react";
 import Filter from "../components/Filter";
 import {Box} from "@mui/material";
 import { useJobs } from '../features/jobSlice';
+import SearchFilter from "../components/SearchFilter";
 
 export default function FilterList() {
 const { allJobs, backUpJobs } = useJobs();
@@ -57,5 +58,6 @@ const { allJobs, backUpJobs } = useJobs();
     {
         listOfFilters.map((filter,index) => <Filter filter={filter} key={index}/>)
     }
+     <SearchFilter/>
   </Box>;
 }
