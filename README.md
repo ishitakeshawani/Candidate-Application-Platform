@@ -8,9 +8,9 @@
  ![Badge](https://img.shields.io/badge/-Redux%20-blue)
 </div>
 
-<!-- <h3 align="center">
-          Live Project : https://todayspost.netlify.app/
-</h3> -->
+<h3 align="center">
+          Live Project : https://ishita-candidate-application-platform.netlify.app/
+</h3>
 <br />
 
 
