@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getJobs, useJobs } from '../features/jobSlice';
 import { useDispatch } from 'react-redux';
-import { Grid, CircularProgress } from '@mui/material';
+import { Grid, CircularProgress, Typography } from '@mui/material';
 import JobCard from '../components/JobCard';
+import { filterBy } from '../utils'
 
 export default function JobList() {
     const [offset, setOffset] = useState(0);
@@ -19,8 +20,8 @@ export default function JobList() {
     }, [dispatch, offset]); // Include offset in dependencies
 
     // Get jobs, isLoading, numberOfJobs by destructuring using useJobs hook
-    const { isLoading, allJobs } = useJobs();
-
+    const { isLoading, allJobs, selectedFilters, backUpJobs } = useJobs();
+    let filteredJobs = filterBy(allJobs,selectedFilters,backUpJobs); // filter jobs by selcted filters
 
     const fetchMoreJobs = () => {
         setOffset(prevOffset => prevOffset + 1);
@@ -53,13 +54,15 @@ export default function JobList() {
         </Grid>
       ) : 
     // Show jobs if available
-      allJobs?.length > 0 ? (
-        allJobs?.map((job, index) => 
+    filteredJobs?.length > 0 ? (
+      filteredJobs?.map((job, index) => 
         <Grid item key={job.jdUid} xs={12} sm={6} md={4} lg={3}>
             <JobCard job={job}/>
             </Grid>)
             ) : (
-        <h1 sx={{margin: 'auto'}}>Can not find jobs!</h1>
+              <Grid item xs={12} style={{ minHeight: '100vh' }} container justifyContent="center">
+                <Typography variant='h3' component={"h3"}>Can not find jobs!</Typography>
+              </Grid>
       )}
     </Grid>
   );
